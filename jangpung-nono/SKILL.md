@@ -25,9 +25,12 @@ description: Refactor deeply nested conditionals, match expressions, and long fu
 - bool 값만 판별하는 `match f x with | true -> ... | false -> ...` 형태도
   쓰지 않는다. 이 경우에는 `if f x then ... else ...`를 사용한다. bool이
   아닌 variant나 Option/Result의 구조를 분해할 때는 `match`를 사용한다.
-- `|>`로 이어지는 하나의 파이프라인 문장은 여러 줄로 나누지 않는다.
-  길어지면 중간 결과를 의미 있는 지역변수나 helper로 분리하고, 각
-  파이프라인은 한 줄에 둔다.
+- 짧은 함수들을 연결한 `x |> f |> g` 형태의 파이프라인은 가독성을 위해
+  여러 줄에 걸쳐 이어도 된다.
+- 다만 `x |> List.fold_left (fun ... -> ...) |> ...`처럼 한 단계의 익명
+  함수나 식 자체가 여러 줄로 길어지는 경우에는 그 단계를 이름 있는
+  helper나 중간 결과로 분리한다. 긴 단계를 파이프라인 안에 넣은 채 다음
+  `|>`를 이어 붙이지 않는다.
 
 ## 함수 정의 순서
 
