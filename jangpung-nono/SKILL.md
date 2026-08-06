@@ -22,6 +22,12 @@ description: Refactor deeply nested conditionals, match expressions, and long fu
   값을 만들지 않는 Option 관문을 억지로 쓰지 않는다. 조건은 이름 있는
   predicate/helper에서 먼저 판별하고, 실제 값을 반환하는 Option 단계와
   조합한다. 단순 조건이면 평범한 `if` 또는 `match`를 사용한다.
+- 조건 helper가 `Some ()`만 반환하는 경우에도 `let* () = helper ... in`으로
+  관문을 만들지 않는다. helper는 bool predicate로 만들고 `if`로 분기하거나,
+  후속 단계에서 실제로 사용할 값을 반환하도록 한다.
+- `if`의 분기 안에 또 다른 `if`를 두거나, `match`의 분기 안에 또 다른
+  `if`/`match`를 중첩하지 않는다. 안쪽 판별은 이름 있는 helper로 추출하고,
+  바깥 함수는 helper 호출과 한 단계의 조합만 담당하게 한다.
 - bool 값만 판별하는 `match f x with | true -> ... | false -> ...` 형태도
   쓰지 않는다. 이 경우에는 `if f x then ... else ...`를 사용한다. bool이
   아닌 variant나 Option/Result의 구조를 분해할 때는 `match`를 사용한다.
