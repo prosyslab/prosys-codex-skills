@@ -92,7 +92,8 @@ def build_zotero_item(
     volume = str(metadata.get("volume") or "").strip()
     issue = str(metadata.get("issue") or "").strip()
     if venue:
-        item["publicationTitle"] = normalize_publication_title(venue, publication_title_rules or {})
+        venue_field = "proceedingsTitle" if resolved_item_type == "conferencePaper" else "publicationTitle"
+        item[venue_field] = normalize_publication_title(venue, publication_title_rules or {})
     if year:
         item["date"] = year
     if volume:

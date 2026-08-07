@@ -67,10 +67,26 @@ The final Zotero item uses the inferred `itemType`; an explicit
 
 ## Publication-title normalization
 
+Publication titles written to Zotero must use the `full name (acronym)` format
+for both journals and conferences. DOI metadata and paper PDFs often contain
+full names, abbreviations, or other non-standard variants, so do not copy an
+unstandardized venue name directly into Zotero.
+
 Always let the bundled `scripts/add_to_zotero.py` load the adjacent
-`scripts/publication_title_rules.json` at runtime. Add exact source-to-target
-mappings to that JSON file when a publication title needs a repository-approved name.
-Unknown titles are preserved after whitespace normalization. For example:
+`scripts/publication_title_rules.json` at runtime. Apply the exact
+source-to-target mappings in that file. If no rule exists for a venue, determine
+its conventional full name and acronym from the DOI metadata, paper, or the
+official publication page, add the exact mapping to
+`publication_title_rules.json`, and then run the script so the normalized value
+is used in Zotero. Do not leave an unknown or non-standard venue unchanged.
+
+Examples of the required format:
+
+- `Proceedings of the ACM on Programming Languages (PACMPL)`
+- `ACM International Conference on the Foundations of Software Engineering (FSE)`
+- `International Conference on Software Engineering (ICSE)`
+
+For example:
 
 ```json
 "Proc. ACM Program. Lang.":

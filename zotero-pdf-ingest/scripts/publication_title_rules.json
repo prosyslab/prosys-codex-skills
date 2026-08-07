@@ -1,6 +1,8 @@
 {
   "version": 1,
   "publication_titles": {
+    "ACM Transactions on Software Engineering and Methodology": "ACM Transactions on Software Engineering and Methodology (TOSEM)",
+    "ESEC/FSE '23: 31st ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering": "ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE)",
     "Proceedings of the ACM on Programming Languages": "Proceedings of the ACM on Programming Languages (PACMPL)",
     "Proc. ACM Program. Lang.": "Proceedings of the ACM on Programming Languages (PACMPL)"
   }
