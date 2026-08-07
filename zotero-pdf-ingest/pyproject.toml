@@ -1,0 +1,9 @@
+[project]
+name = "zotero-pdf-ingest"
+version = "0.1.0"
+description = "Extract paper metadata from PDFs and add normalized records to Zotero"
+requires-python = ">=3.11"
+dependencies = [
+    "PyMuPDF>=1.24,<2",
+    "requests>=2.31,<3",
+]

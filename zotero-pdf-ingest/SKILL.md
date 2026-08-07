@@ -1,42 +1,61 @@
 ---
 name: zotero-pdf-ingest
-description: Extract a paper DOI from a PDF, fetch title/authors/publication venue/year/volume/issue and journal-versus-conference type from Crossref, then add the normalized metadata to a Zotero group library. Use when working with this repository's PDF-to-Zotero workflow or when asked to import papers from PDFs into Zotero.
+description: "Extract a paper DOI from a PDF, fetch title/authors/publication venue/year/volume/issue and journal-versus-conference type from Crossref, then add the normalized metadata to a Zotero group library. Use one persistent Python virtual environment: create and install dependencies only on the first use, then reuse that environment on every later use."
 ---
 
 # Zotero PDF Ingest
 
 Use the bundled three executable stages in `scripts/` as a JSON pipeline. Keep
 the stages separate so an agent can inspect, retry, or replace one stage
-without repeating the others. Run them with a Python environment that provides
-PyMuPDF and `requests`; the repository's `.venv` is suitable when working in
-this project.
+without repeating the others. Before running them, check for the repository's
+persistent `.venv`. If it does not exist, create it once and install PyMuPDF
+and `requests`; if it already exists, reuse it and do not recreate the virtual
+environment or reinstall its dependencies on later skill invocations.
+
+Run every stage with the same persistent virtual-environment interpreter. If a
+dependency is missing from an existing environment, diagnose or repair that
+environment instead of deleting and rebuilding it.
+
+Initialize the environment once before the first stage:
+
+```bash
+if [ ! -x .venv/bin/python ]; then
+  python3 -m venv .venv
+fi
+if ! .venv/bin/python -c 'import pymupdf, requests' >/dev/null 2>&1; then
+  .venv/bin/python -m pip install PyMuPDF requests
+fi
+```
+
+The existence and import checks make subsequent invocations reuse the same
+environment without reinstalling dependencies.
 
 ## Workflow
 
 1. Extract the DOI from the PDF:
 
    ```bash
-   ./scripts/read_pdf.py path/to/paper.pdf > doi.json
+   .venv/bin/python scripts/read_pdf.py path/to/paper.pdf > doi.json
    ```
 
 2. Resolve the DOI through Crossref:
 
    ```bash
-   ./scripts/extract_metadata.py < doi.json > metadata.json
+   .venv/bin/python scripts/extract_metadata.py < doi.json > metadata.json
    ```
 
 3. Add the metadata to Zotero:
 
    ```bash
-   ./scripts/add_to_zotero.py < metadata.json
+   .venv/bin/python scripts/add_to_zotero.py < metadata.json
    ```
 
 The stages can also be piped directly:
 
 ```bash
-./scripts/read_pdf.py path/to/paper.pdf \
-  | ./scripts/extract_metadata.py \
-  | ./scripts/add_to_zotero.py
+.venv/bin/python scripts/read_pdf.py path/to/paper.pdf \
+  | .venv/bin/python scripts/extract_metadata.py \
+  | .venv/bin/python scripts/add_to_zotero.py
 ```
 
 Require `ZOTERO_GROUP_ID` and `ZOTERO_API_KEY` in the process environment
