@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zotero PDF Importer"
+  short_description: "Extract PDF metadata and add papers to Zotero"
+  default_prompt: "Use $zotero-pdf-ingest to extract a PDF DOI, fetch its metadata, and add it to Zotero."
