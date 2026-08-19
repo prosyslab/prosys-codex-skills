@@ -1,0 +1,4 @@
+interface:
+  display_name: "Commit Guidelines"
+  short_description: "Create focused, validated commits with strict message formatting"
+  default_prompt: "Use $commit-guidelines to inspect, validate, stage, and commit only the requested changes."
