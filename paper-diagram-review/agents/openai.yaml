@@ -1,0 +1,3 @@
+interface:
+  display_name: "논문 시스템 다이어그램 평가"
+  short_description: "논문용 시스템 다이어그램의 화살표, 블록 비율, 간격과 대칭을 평가"
