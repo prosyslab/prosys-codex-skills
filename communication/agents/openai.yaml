@@ -1,0 +1,4 @@
+interface:
+  display_name: "Communication"
+  short_description: "Apply clear, precise writing and speaking rules in Korean and English"
+  default_prompt: "Use $communication to draft or revise this text according to my writing and communication rules."
